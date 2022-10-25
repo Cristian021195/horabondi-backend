@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { existsSync } from 'fs';
+import { existsSync, readdir } from 'fs';
 import {Router} from 'express'
 import { cwd } from 'process';
 
@@ -18,5 +18,11 @@ file_route.get('/current', (req:Request,res:Response)=>{
 })
 
 file_route.get('/exist', (req:Request,res:Response)=>{
-    res.send({current:__dirname, cwd: cwd()})
+    let arr_ar = [];
+    readdir('./data',(err,files)=>{
+        if(err){res.status(500).send({error:true, message:'error al leer directorio'})}
+        arr_ar = files.map((ar)=> ar )
+        
+        res.send({error:false, archivos:[arr_ar]})
+    })
 })
