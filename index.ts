@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, Request, Response, json } from 'express';
 import dotenv from 'dotenv';
 import { file_route } from './Routers/file';
 
@@ -11,6 +11,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
+app.use(json())
 app.use('/file', file_route)
 
 

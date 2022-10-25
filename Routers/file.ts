@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { existsSync, readdir } from 'fs';
+import { existsSync, readdir, writeFileSync } from 'fs';
 import {Router} from 'express'
 import { cwd } from 'process';
 
@@ -25,4 +25,17 @@ file_route.get('/exist', (req:Request,res:Response)=>{
         
         res.send({error:false, archivos:[arr_ar]})
     })
+})
+
+file_route.post('/create', (req:Request,res:Response)=>{
+    if(req.body?.create && req.body?.create === true){
+        writeFileSync('./data/'+req.body?.namefile, JSON.stringify(req.body.data))
+        if(existsSync('./data/'+req.body?.namefile)){
+            res.send({error:false, message:'archivo creado correctamente!'})
+        }else{
+            res.send({error:true, message:'no se creo'})
+        }
+    }else{
+        res.send({error:true, message:'bad'})
+    }
 })

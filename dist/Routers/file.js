@@ -25,3 +25,18 @@ exports.file_route.get('/exist', (req, res) => {
         res.send({ error: false, archivos: [arr_ar] });
     });
 });
+exports.file_route.post('/create', (req, res) => {
+    var _a, _b, _c, _d;
+    if (((_a = req.body) === null || _a === void 0 ? void 0 : _a.create) && ((_b = req.body) === null || _b === void 0 ? void 0 : _b.create) === true) {
+        (0, fs_1.writeFileSync)('./data/' + ((_c = req.body) === null || _c === void 0 ? void 0 : _c.namefile), JSON.stringify(req.body.data));
+        if ((0, fs_1.existsSync)('./data/' + ((_d = req.body) === null || _d === void 0 ? void 0 : _d.namefile))) {
+            res.send({ error: false, message: 'archivo creado correctamente!' });
+        }
+        else {
+            res.send({ error: true, message: 'no se creo' });
+        }
+    }
+    else {
+        res.send({ error: true, message: 'bad' });
+    }
+});
