@@ -27,6 +27,17 @@ file_route.get('/exist', (req:Request,res:Response)=>{
     })
 })
 
+file_route.post('/buscar', (req:Request,res:Response)=>{
+    const dir = req.body?.directorio+'';
+    let arr_ar = [];
+    readdir('./data'+dir,(err,files)=>{
+        if(err){res.status(500).send({error:true, message:'error al leer directorio'})}
+        arr_ar = files.map((ar)=> ar )
+        
+        res.send({error:false, archivos:[arr_ar]})
+    })
+})
+
 file_route.post('/create', (req:Request,res:Response)=>{
     if(req.body?.create && req.body?.create === true){
         writeFileSync('./data/'+req.body?.namefile, JSON.stringify(req.body.data))
