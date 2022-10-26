@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const file_1 = require("./Routers/file");
+const upload_1 = require("./Routers/upload");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 });
 app.use((0, express_1.json)());
 app.use('/file', file_1.file_route);
+app.use('/upload', upload_1.upload_route);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });

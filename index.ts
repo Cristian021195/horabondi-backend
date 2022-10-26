@@ -1,6 +1,7 @@
 import express, { Express, Request, Response, json } from 'express';
 import dotenv from 'dotenv';
 import { file_route } from './Routers/file';
+import { upload_route } from './Routers/upload';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(json())
 app.use('/file', file_route)
+app.use('/upload', upload_route)
 
 
 
