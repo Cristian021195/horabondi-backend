@@ -2,6 +2,8 @@ import express, { Express, Request, Response, json } from 'express';
 import dotenv from 'dotenv';
 import { file_route } from './Routers/file';
 import { upload_route } from './Routers/upload';
+import { horarios_route } from './Routers/horarios';
+import { precios_route } from './Routers/precios';
 
 dotenv.config();
 
@@ -15,8 +17,8 @@ app.get('/', (req: Request, res: Response) => {
 app.use(json())
 app.use('/file', file_route)
 app.use('/upload', upload_route)
-
-
+app.use('/horarios', horarios_route)
+app.use('/precios', precios_route)
 
 
 app.listen(port, () => {
