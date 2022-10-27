@@ -32,7 +32,19 @@ const file_1 = require("./Routers/file");
 const upload_1 = require("./Routers/upload");
 const horarios_1 = require("./Routers/horarios");
 const precios_1 = require("./Routers/precios");
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
+const whitelist = ['http://localhost:3000', 'http://localhost:3002', 'https://horabondi.vercel.app'];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+};
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.get('/', (req, res) => {
@@ -41,7 +53,7 @@ app.get('/', (req, res) => {
 app.use((0, express_1.json)());
 app.use('/file', file_1.file_route);
 app.use('/upload', upload_1.upload_route);
-app.use('/horarios', horarios_1.horarios_route);
+app.use('/horarios', (0, cors_1.default)(corsOptions), horarios_1.horarios_route);
 app.use('/precios', precios_1.precios_route);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

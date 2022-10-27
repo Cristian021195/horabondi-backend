@@ -20,8 +20,10 @@
   "author": "Cristian Ismael Gramajo",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.12",
     "@types/formidable": "^2.0.5",
     "@types/uuid": "^8.3.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "formidable": "^2.0.1",

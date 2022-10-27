@@ -4,8 +4,19 @@ import { file_route } from './Routers/file';
 import { upload_route } from './Routers/upload';
 import { horarios_route } from './Routers/horarios';
 import { precios_route } from './Routers/precios';
-
+import cors from "cors";
 dotenv.config();
+
+const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
+const corsOptions = {
+  origin: function (origin:any, callback:any) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -17,7 +28,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use(json())
 app.use('/file', file_route)
 app.use('/upload', upload_route)
-app.use('/horarios', horarios_route)
+app.use('/horarios', cors(corsOptions),horarios_route)
 app.use('/precios', precios_route)
 
 
