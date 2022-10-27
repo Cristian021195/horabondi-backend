@@ -21,15 +21,15 @@ const corsOptions = {
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', cors(corsOptions), (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
 app.use(json())
-app.use('/file', file_route)
-app.use('/upload', upload_route)
+app.use('/file', cors(corsOptions), file_route)
+app.use('/upload', cors(corsOptions), upload_route)
 app.use('/horarios', cors(corsOptions),horarios_route)
-app.use('/precios', precios_route)
+app.use('/precios', cors(corsOptions), precios_route)
 
 
 app.listen(port, () => {
