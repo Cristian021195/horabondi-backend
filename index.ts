@@ -7,7 +7,7 @@ import { precios_route } from './Routers/precios';
 import cors from "cors";
 dotenv.config();
 
-const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
+/*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
 const corsOptions = {
   origin: function (origin:any, callback:any) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -29,7 +29,20 @@ app.use(json())
 app.use('/file', cors(corsOptions), file_route)
 app.use('/upload', cors(corsOptions), upload_route)
 app.use('/horarios', cors(corsOptions),horarios_route)
-app.use('/precios', cors(corsOptions), precios_route)
+app.use('/precios', cors(corsOptions), precios_route)*/
+
+const app: Express = express();
+const port = process.env.PORT;
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Express + TypeScript Server');
+});
+
+app.use(json())
+app.use('/file', file_route)
+app.use('/upload', upload_route)
+app.use('/horarios',horarios_route)
+app.use('/precios', precios_route)
 
 
 app.listen(port, () => {
