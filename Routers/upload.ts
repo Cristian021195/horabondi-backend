@@ -10,12 +10,13 @@ import { renameSync, writeFileSync } from "fs";
 import { v4 as uuidv4 } from 'uuid';
 import { pool } from "../config/db";
 import { OkPacket } from "mysql2";
+import { DIRECTORIES_B } from '../Utils/directories';
 export const upload_route = Router();
 
 upload_route.post('/archivos', (req:Request,res:Response)=>{
     if(crearDirectorioData()){
         const form:INewIncomingForm = new IncomingForm({ multiples: true });
-        form.uploaddir = process.cwd()+DIRECTORIES.EXCEL_DIR_HORARIOS;    form.uploadDir = process.cwd()+DIRECTORIES.EXCEL_DIR_HORARIOS;
+        form.uploaddir = DIRECTORIES_B.EXCEL_DIR_HORARIOS;    form.uploadDir = DIRECTORIES_B.EXCEL_DIR_HORARIOS;
         form.maxFileSize = 20 * 1024 * 1024;                form.keepExtensions = true;
         
         form.parse(req, (err:Error, fields:any, files:any) => {
@@ -44,13 +45,13 @@ upload_route.post('/archivos', (req:Request,res:Response)=>{
 function crearArchivos(_files:IFilesProps){
 
     _files.archivo?.forEach(async(file:IFileFormidableProps,f_i:number)=>{
-        let filepath = file.filepath;   let new_filepath = process.cwd()+DIRECTORIES.EXCEL_DIR_HORARIOS+file.originalFilename;
+        let filepath = file.filepath;   let new_filepath = DIRECTORIES_B.EXCEL_DIR_HORARIOS+file.originalFilename;
         let name_file = file.originalFilename.replace(REGEX.DOT_SPREADSHEET,"");    let json_file= name_file+".json";
-        let new_json_filepath = process.cwd()+DIRECTORIES.JSON_DIR_HORARIOS+json_file;
+        let new_json_filepath = DIRECTORIES_B.JSON_DIR_HORARIOS+json_file;
 
         if(REGEX.PRECIO.test(name_file)){
-            new_filepath = process.cwd()+DIRECTORIES.EXCEL_DIR_PRECIOS+file.originalFilename;
-            new_json_filepath = process.cwd()+DIRECTORIES.JSON_DIR_PRECIOS+json_file;
+            new_filepath = DIRECTORIES_B.EXCEL_DIR_PRECIOS+file.originalFilename;
+            new_json_filepath = DIRECTORIES_B.JSON_DIR_PRECIOS+json_file;
         }   //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {

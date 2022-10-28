@@ -4,6 +4,7 @@ exports.file_route = void 0;
 const fs_1 = require("fs");
 const express_1 = require("express");
 const process_1 = require("process");
+const directories_1 = require("../Utils/directories");
 exports.file_route = (0, express_1.Router)();
 exports.file_route.get('/excel', (req, res) => {
     res.send('extamos desde file excel');
@@ -58,9 +59,9 @@ exports.file_route.get('/currents', (req, res) => {
         dirname: __dirname,
         custom: "\\data\\excel\\horarios\\",
         exists_data_folder: (0, fs_1.existsSync)("./data"),
-        exists_custom_cwd_data_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\"),
-        exists_custom_cwd_data_json_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\"),
-        exists_custom_cwd_data_json_horarios_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\horarios\\"),
-        exists_custom_cwd_data_json_horarios_file: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\horarios\\exprebus-38-sabados-ns.json")
+        exists_custom_cwd_data_folder: (0, fs_1.existsSync)(directories_1.DIRECTORIES_B.DATA_DIR),
+        exists_custom_cwd_data_json_folder: (0, fs_1.existsSync)(directories_1.DIRECTORIES_B.JSON_DIR),
+        exists_custom_cwd_data_json_horarios_folder: (0, fs_1.existsSync)(directories_1.DIRECTORIES_B.JSON_DIR_HORARIOS),
+        exists_custom_cwd_data_json_horarios_file: (0, fs_1.existsSync)(directories_1.DIRECTORIES_B.JSON_DIR_HORARIOS + "exprebus-38-sabados-ns.json")
     });
 });

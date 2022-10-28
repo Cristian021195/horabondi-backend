@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { existsSync, readdir, writeFileSync } from 'fs';
 import {Router} from 'express'
 import { cwd } from 'process';
+import { DIRECTORIES_B } from '../Utils/directories';
 
 export const file_route = Router();
 
@@ -57,9 +58,9 @@ file_route.get('/currents', (req:Request,res:Response)=>{
         dirname: __dirname,
         custom: "\\data\\excel\\horarios\\",
         exists_data_folder: existsSync("./data"),
-        exists_custom_cwd_data_folder: existsSync(process.cwd()+"\\data\\"),
-        exists_custom_cwd_data_json_folder: existsSync(process.cwd()+"\\data\\json\\"),
-        exists_custom_cwd_data_json_horarios_folder: existsSync(process.cwd()+"\\data\\json\\horarios\\"),
-        exists_custom_cwd_data_json_horarios_file: existsSync(process.cwd()+"\\data\\json\\horarios\\exprebus-38-sabados-ns.json")
+        exists_custom_cwd_data_folder: existsSync(DIRECTORIES_B.DATA_DIR),
+        exists_custom_cwd_data_json_folder: existsSync(DIRECTORIES_B.JSON_DIR),
+        exists_custom_cwd_data_json_horarios_folder: existsSync(DIRECTORIES_B.JSON_DIR_HORARIOS),
+        exists_custom_cwd_data_json_horarios_file: existsSync(DIRECTORIES_B.JSON_DIR_HORARIOS+"exprebus-38-sabados-ns.json")
     })
 })

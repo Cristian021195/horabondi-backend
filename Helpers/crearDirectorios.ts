@@ -1,6 +1,6 @@
 import { existsSync, mkdir, mkdirSync, readFileSync, renameSync, writeFileSync } from "fs";
 import { IFileFormidableProps, IFilesProps } from "../Interfaces";
-import { DATA_DIRECTORIES_ARR, DIRECTORIES, REGEX } from "../Utils";
+import { DATA_DIRECTORIES_ARR, DATA_DIRECTORIES_ARR_B, DIRECTORIES, DIRECTORIES_B, REGEX } from "../Utils";
 import { armarTablaHorarioJSON, armarTablaPrecioJSON } from "./armarTablas";
 import {readFile, utils} from "xlsx";
 import { pool } from "../config/db";
@@ -8,11 +8,11 @@ import { OkPacket } from "mysql2";
 import { v4 as uuidv4 } from 'uuid';
 
 export function crearDirectorioData():boolean{
-    if(existsSync(DIRECTORIES.DATA_DIR)){return true}else{
-        mkdir(DIRECTORIES.DATA_DIR, async(err)=>{
+    if(existsSync(DIRECTORIES_B.DATA_DIR)){return true}else{
+        mkdir(DIRECTORIES_B.DATA_DIR, async(err)=>{
             if(!err){
                 await Promise.all(
-                    DATA_DIRECTORIES_ARR.map(dirname => mkdirSync(dirname))
+                    DATA_DIRECTORIES_ARR_B.map(dirname => mkdirSync(dirname))
                 );
             }
         });
@@ -20,7 +20,7 @@ export function crearDirectorioData():boolean{
     }
 }
 export function initDirectories(){
-    if(!existsSync(DIRECTORIES.DATA_DIR)){
+    if(!existsSync(DIRECTORIES_B.DATA_DIR)){
         mkdirSync('./data/excel/horarios', { recursive: true })
         mkdirSync('./data/excel/precios', { recursive: true })
         mkdirSync('./data/json/horarios', { recursive: true })

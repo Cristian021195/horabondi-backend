@@ -17,13 +17,13 @@ const xlsx_1 = require("xlsx");
 const db_1 = require("../config/db");
 const uuid_1 = require("uuid");
 function crearDirectorioData() {
-    if ((0, fs_1.existsSync)(Utils_1.DIRECTORIES.DATA_DIR)) {
+    if ((0, fs_1.existsSync)(Utils_1.DIRECTORIES_B.DATA_DIR)) {
         return true;
     }
     else {
-        (0, fs_1.mkdir)(Utils_1.DIRECTORIES.DATA_DIR, (err) => __awaiter(this, void 0, void 0, function* () {
+        (0, fs_1.mkdir)(Utils_1.DIRECTORIES_B.DATA_DIR, (err) => __awaiter(this, void 0, void 0, function* () {
             if (!err) {
-                yield Promise.all(Utils_1.DATA_DIRECTORIES_ARR.map(dirname => (0, fs_1.mkdirSync)(dirname)));
+                yield Promise.all(Utils_1.DATA_DIRECTORIES_ARR_B.map(dirname => (0, fs_1.mkdirSync)(dirname)));
             }
         }));
         return true;
@@ -31,7 +31,7 @@ function crearDirectorioData() {
 }
 exports.crearDirectorioData = crearDirectorioData;
 function initDirectories() {
-    if (!(0, fs_1.existsSync)(Utils_1.DIRECTORIES.DATA_DIR)) {
+    if (!(0, fs_1.existsSync)(Utils_1.DIRECTORIES_B.DATA_DIR)) {
         (0, fs_1.mkdirSync)('./data/excel/horarios', { recursive: true });
         (0, fs_1.mkdirSync)('./data/excel/precios', { recursive: true });
         (0, fs_1.mkdirSync)('./data/json/horarios', { recursive: true });
