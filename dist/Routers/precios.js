@@ -8,9 +8,9 @@ exports.precios_route = (0, express_1.Router)();
 exports.precios_route.get('/:empresa', (req, res) => {
     const empresa = req.params.empresa;
     try {
-        let files_arr = (0, fs_1.readdirSync)(Utils_1.DIRECTORIES.JSON_DIR_PRECIOS).filter((dir, dir_i) => dir.includes(empresa + ''));
+        let files_arr = (0, fs_1.readdirSync)(Utils_1.DIRECTORIES_B.JSON_DIR_PRECIOS).filter((dir, dir_i) => dir.includes(empresa + ''));
         let data = files_arr.map((fa, fa_i) => {
-            return Object.assign(Object.assign({}, JSON.parse((0, fs_1.readFileSync)(Utils_1.DIRECTORIES.JSON_DIR_PRECIOS + '/' + fa, { encoding: 'utf-8' }))), { data_file: fa.replace(Utils_1.REGEX.DATA_TEXT, "") });
+            return Object.assign(Object.assign({}, JSON.parse((0, fs_1.readFileSync)(Utils_1.DIRECTORIES_B.JSON_DIR_PRECIOS + '/' + fa, { encoding: 'utf-8' }))), { data_file: fa.replace(Utils_1.REGEX.DATA_TEXT, "") });
         });
         //console.log(data)
         //let data = JSON.parse(fs.readFileSync(DIRECTORIES.JSON_DIR+'/exprebus-38-sabado-ns.json', {encoding:'utf-8'}));

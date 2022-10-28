@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { existsSync, readdir, readdirSync, readFileSync, writeFileSync } from 'fs';
 import {Router} from 'express'
 import { cwd } from 'process';
-import { DIRECTORIES, REGEX } from '../Utils';
+import { DIRECTORIES, DIRECTORIES_B, REGEX } from '../Utils';
 
 export const horarios_route = Router();
 
@@ -11,10 +11,10 @@ horarios_route.get('/:empresa', (req:Request,res:Response)=>{
     if(empresa){
         try {
         
-            let files_arr = readdirSync(DIRECTORIES.JSON_DIR_HORARIOS).filter((dir:string,dir_i:number)=>dir.includes(empresa+''));
+            let files_arr = readdirSync(DIRECTORIES_B.JSON_DIR_HORARIOS).filter((dir:string,dir_i:number)=>dir.includes(empresa+''));
             let data = files_arr.map((fa,fa_i)=>{
                 return {
-                    ...JSON.parse(readFileSync(DIRECTORIES.JSON_DIR_HORARIOS+'/'+fa, {encoding:'utf-8'})), data_file:fa.replace(REGEX.DATA_TEXT,"")
+                    ...JSON.parse(readFileSync(DIRECTORIES_B.JSON_DIR_HORARIOS+'/'+fa, {encoding:'utf-8'})), data_file:fa.replace(REGEX.DATA_TEXT,"")
                 }
             })
     
