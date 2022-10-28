@@ -57,6 +57,7 @@ exports.file_route.get('/currents', (req, res) => {
         cwd: process.cwd(),
         dirname: __dirname,
         custom: "\\data\\excel\\horarios\\",
+        exists_data_folder: (0, fs_1.existsSync)("./data"),
         exists_custom_cwd_data_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\"),
         exists_custom_cwd_data_json_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\"),
         exists_custom_cwd_data_json_horarios_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\horarios\\"),

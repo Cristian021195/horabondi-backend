@@ -9,19 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.crearArchivos = exports.crearDirectoriosIniciales = exports.crearDirectorioData = void 0;
+exports.crearArchivos = exports.initDirectories = exports.crearDirectorioData = void 0;
 const fs_1 = require("fs");
 const Utils_1 = require("../Utils");
 const armarTablas_1 = require("./armarTablas");
 const xlsx_1 = require("xlsx");
 const db_1 = require("../config/db");
 const uuid_1 = require("uuid");
-function crearDirectorioData(src) {
-    if ((0, fs_1.existsSync)(src)) {
+function crearDirectorioData() {
+    if ((0, fs_1.existsSync)(Utils_1.DIRECTORIES.DATA_DIR)) {
         return true;
     }
     else {
-        (0, fs_1.mkdir)(src, (err) => __awaiter(this, void 0, void 0, function* () {
+        (0, fs_1.mkdir)(Utils_1.DIRECTORIES.DATA_DIR, (err) => __awaiter(this, void 0, void 0, function* () {
             if (!err) {
                 yield Promise.all(Utils_1.DATA_DIRECTORIES_ARR.map(dirname => (0, fs_1.mkdirSync)(dirname)));
             }
@@ -30,14 +30,15 @@ function crearDirectorioData(src) {
     }
 }
 exports.crearDirectorioData = crearDirectorioData;
-function crearDirectoriosIniciales() {
-    (0, fs_1.mkdirSync)('./data');
-    (0, fs_1.mkdirSync)('./data/excel');
-    //mkdirSync(DIRECTORIES.EXCEL_DIR); mkdirSync(DIRECTORIES.JSON_DIR);
-    //mkdirSync(DIRECTORIES.EXCEL_DIR_HORARIOS); mkdirSync(DIRECTORIES.EXCEL_DIR_PRECIOS);
-    //mkdirSync(DIRECTORIES.JSON_DIR_HORARIOS); mkdirSync(DIRECTORIES.JSON_DIR_PRECIOS);
+function initDirectories() {
+    if (!(0, fs_1.existsSync)(Utils_1.DIRECTORIES.DATA_DIR)) {
+        (0, fs_1.mkdirSync)('./data/excel/horarios', { recursive: true });
+        (0, fs_1.mkdirSync)('./data/excel/precios', { recursive: true });
+        (0, fs_1.mkdirSync)('./data/json/horarios', { recursive: true });
+        (0, fs_1.mkdirSync)('./data/json/precios', { recursive: true });
+    }
 }
-exports.crearDirectoriosIniciales = crearDirectoriosIniciales;
+exports.initDirectories = initDirectories;
 function crearArchivos(_files) {
     var _a;
     try {

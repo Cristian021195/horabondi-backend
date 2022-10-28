@@ -59,7 +59,7 @@ app.use('/horarios', cors(corsOptions),horarios_route)
 app.use('/precios', cors(corsOptions), precios_route)*/
 const app = (0, express_1.default)();
 const port = process.env.PORT;
-(0, Helpers_1.crearDirectoriosIniciales)();
+(0, Helpers_1.initDirectories)();
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });

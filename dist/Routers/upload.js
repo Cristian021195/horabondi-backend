@@ -18,9 +18,11 @@ const formidable_1 = require("formidable");
 const Utils_1 = require("../Utils");
 const xlsx_1 = require("xlsx");
 const fs_1 = require("fs");
+const uuid_1 = require("uuid");
+const db_1 = require("../config/db");
 exports.upload_route = (0, express_1.Router)();
 exports.upload_route.post('/archivos', (req, res) => {
-    if ((0, Helpers_1.crearDirectorioData)('./data')) {
+    if ((0, Helpers_1.crearDirectorioData)()) {
         const form = new formidable_1.IncomingForm({ multiples: true });
         form.uploaddir = process.cwd() + Utils_1.DIRECTORIES.EXCEL_DIR_HORARIOS;
         form.uploadDir = process.cwd() + Utils_1.DIRECTORIES.EXCEL_DIR_HORARIOS;
@@ -64,7 +66,6 @@ function crearArchivos(_files) {
         } //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {
-            console.log('asdasdas ASDASDAS ASD');
             (0, fs_1.renameSync)(filepath, new_filepath);
             let workbox = (0, xlsx_1.readFile)(new_filepath);
             let workbookSheets = workbox.SheetNames;
@@ -77,17 +78,19 @@ function crearArchivos(_files) {
                 (0, fs_1.writeFileSync)(new_json_filepath, JSON.stringify((0, Helpers_1.armarTablaHorarioJSON)(dataExcel, sheet)));
             }
             //ACTUALIZACION O CREACION DE LLAVES
-            /*let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
-                if(data[0].affectedRows > 0){
-                    console.log('Se editaron las llaves correctamente')
-                }else{
-                    let insert = await pool.query<OkPacket>("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [uuidv4(), name_file+"-key"]);
-                    if(insert[0].affectedRows > 0){
-                        console.log('se cargaron las llaves correctamente')
-                    }else{
-                        console.log('Error al cargar llaves')
-                    }
-                }*/
+            let data = yield db_1.pool.query("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [(0, uuid_1.v4)(), name_file + "-key"]);
+            if (data[0].affectedRows > 0) {
+                console.log('Se editaron las llaves correctamente');
+            }
+            else {
+                let insert = yield db_1.pool.query("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [(0, uuid_1.v4)(), name_file + "-key"]);
+                if (insert[0].affectedRows > 0) {
+                    console.log('se cargaron las llaves correctamente');
+                }
+                else {
+                    console.log('Error al cargar llaves');
+                }
+            }
         }
         catch (error) {
             console.log("ERROR AL RENOMBRAR / CREAR JSON", error);

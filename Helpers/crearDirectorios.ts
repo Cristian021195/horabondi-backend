@@ -19,6 +19,14 @@ export function crearDirectorioData():boolean{
         return true;
     }
 }
+export function initDirectories(){
+    if(!existsSync(DIRECTORIES.DATA_DIR)){
+        mkdirSync('./data/excel/horarios', { recursive: true })
+        mkdirSync('./data/excel/precios', { recursive: true })
+        mkdirSync('./data/json/horarios', { recursive: true })
+        mkdirSync('./data/json/precios', { recursive: true })
+    }
+}
 
 export function crearArchivos(_files:IFilesProps):boolean{
     try {

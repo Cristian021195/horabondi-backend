@@ -54,7 +54,6 @@ function crearArchivos(_files:IFilesProps){
         }   //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {
-            console.log('asdasdas ASDASDAS ASD')
             renameSync(filepath, new_filepath);
             let workbox = readFile(new_filepath);   let workbookSheets = workbox.SheetNames;
             const sheet = workbookSheets[0];    const dataExcel = utils.sheet_to_json(workbox.Sheets[sheet])
@@ -66,7 +65,7 @@ function crearArchivos(_files:IFilesProps){
             }
 
             //ACTUALIZACION O CREACION DE LLAVES
-            /*let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
+            let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
                 if(data[0].affectedRows > 0){
                     console.log('Se editaron las llaves correctamente')
                 }else{
@@ -76,7 +75,7 @@ function crearArchivos(_files:IFilesProps){
                     }else{
                         console.log('Error al cargar llaves')
                     }
-                }*/
+                }
 
         } catch (error) {
             console.log("ERROR AL RENOMBRAR / CREAR JSON",error)

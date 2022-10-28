@@ -5,7 +5,7 @@ import { upload_route } from './Routers/upload';
 import { horarios_route } from './Routers/horarios';
 import { precios_route } from './Routers/precios';
 import cors from "cors";
-import { crearDirectorioData } from './Helpers';
+import { crearDirectorioData, initDirectories } from './Helpers';
 import { DIRECTORIES } from './Utils';
 dotenv.config();
 
@@ -35,7 +35,7 @@ app.use('/precios', cors(corsOptions), precios_route)*/
 const app: Express = express();
 const port = process.env.PORT;
 
-//crearDirectorioData();
+initDirectories();
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
