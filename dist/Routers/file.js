@@ -52,9 +52,14 @@ exports.file_route.post('/create', (req, res) => {
         res.send({ error: true, message: 'bad' });
     }
 });
-exports.file_route.post('/currents', (req, res) => {
+exports.file_route.get('/currents', (req, res) => {
     res.send({
         cwd: process.cwd(),
         dirname: __dirname,
+        custom: "\\data\\excel\\horarios\\",
+        exists_custom_cwd_data_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\"),
+        exists_custom_cwd_data_json_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\"),
+        exists_custom_cwd_data_json_horarios_folder: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\horarios\\"),
+        exists_custom_cwd_data_json_horarios_file: (0, fs_1.existsSync)(process.cwd() + "\\data\\json\\horarios\\exprebus-38-sabados-ns.json")
     });
 });
