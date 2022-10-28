@@ -19,7 +19,7 @@ const corsOptions = {
 }
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.get('/', cors(corsOptions), (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
