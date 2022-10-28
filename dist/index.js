@@ -32,28 +32,45 @@ const file_1 = require("./Routers/file");
 const upload_1 = require("./Routers/upload");
 const horarios_1 = require("./Routers/horarios");
 const precios_1 = require("./Routers/precios");
-const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
-const whitelist = ['http://localhost:3000', 'http://localhost:3002', 'https://horabondi.vercel.app'];
+/*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-        }
-        else {
-            callback(new Error('Not allowed by CORS'));
-        }
+  origin: function (origin:any, callback:any) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
     }
-};
+  }
+}
+
+const app: Express = express();
+const port = process.env.PORT;
+
+app.get('/', cors(corsOptions), (req: Request, res: Response) => {
+  res.send('Express + TypeScript Server');
+});
+
+app.use(json())
+app.use('/file', cors(corsOptions), file_route)
+app.use('/upload', cors(corsOptions), upload_route)
+app.use('/horarios', cors(corsOptions),horarios_route)
+app.use('/precios', cors(corsOptions), precios_route)*/
 const app = (0, express_1.default)();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
 app.use((0, express_1.json)());
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', '*');
+    next();
+});
 app.use('/file', file_1.file_route);
 app.use('/upload', upload_1.upload_route);
-app.use('/horarios', (0, cors_1.default)(corsOptions), horarios_1.horarios_route);
+app.use('/horarios', horarios_1.horarios_route);
 app.use('/precios', precios_1.precios_route);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

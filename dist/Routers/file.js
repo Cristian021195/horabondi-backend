@@ -52,3 +52,15 @@ exports.file_route.post('/create', (req, res) => {
         res.send({ error: true, message: 'bad' });
     }
 });
+exports.file_route.post('/currents', (req, res) => {
+    var _a, _b;
+    if (((_a = req.body) === null || _a === void 0 ? void 0 : _a.create) && ((_b = req.body) === null || _b === void 0 ? void 0 : _b.create) === true) {
+        res.send({
+            cwd: process.cwd(),
+            dirname: __dirname,
+        });
+    }
+    else {
+        res.send({ error: true, message: 'bad' });
+    }
+});
