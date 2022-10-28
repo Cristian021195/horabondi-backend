@@ -13,7 +13,7 @@ import { OkPacket } from "mysql2";
 export const upload_route = Router();
 
 upload_route.post('/archivos', (req:Request,res:Response)=>{
-    if(crearDirectorioData('./data')){
+    if(crearDirectorioData()){
         const form:INewIncomingForm = new IncomingForm({ multiples: true });
         form.uploaddir = process.cwd()+DIRECTORIES.EXCEL_DIR_HORARIOS;    form.uploadDir = process.cwd()+DIRECTORIES.EXCEL_DIR_HORARIOS;
         form.maxFileSize = 20 * 1024 * 1024;                form.keepExtensions = true;

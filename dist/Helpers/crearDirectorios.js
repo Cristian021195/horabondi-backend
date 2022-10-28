@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.crearArchivos = exports.crearDirectorioData = void 0;
+exports.crearArchivos = exports.crearDirectoriosIniciales = exports.crearDirectorioData = void 0;
 const fs_1 = require("fs");
 const Utils_1 = require("../Utils");
 const armarTablas_1 = require("./armarTablas");
@@ -21,7 +21,7 @@ function crearDirectorioData(src) {
         return true;
     }
     else {
-        (0, fs_1.mkdir)('./data', (err) => __awaiter(this, void 0, void 0, function* () {
+        (0, fs_1.mkdir)(src, (err) => __awaiter(this, void 0, void 0, function* () {
             if (!err) {
                 yield Promise.all(Utils_1.DATA_DIRECTORIES_ARR.map(dirname => (0, fs_1.mkdirSync)(dirname)));
             }
@@ -30,6 +30,14 @@ function crearDirectorioData(src) {
     }
 }
 exports.crearDirectorioData = crearDirectorioData;
+function crearDirectoriosIniciales() {
+    (0, fs_1.mkdirSync)('./data');
+    (0, fs_1.mkdirSync)('./data/excel');
+    //mkdirSync(DIRECTORIES.EXCEL_DIR); mkdirSync(DIRECTORIES.JSON_DIR);
+    //mkdirSync(DIRECTORIES.EXCEL_DIR_HORARIOS); mkdirSync(DIRECTORIES.EXCEL_DIR_PRECIOS);
+    //mkdirSync(DIRECTORIES.JSON_DIR_HORARIOS); mkdirSync(DIRECTORIES.JSON_DIR_PRECIOS);
+}
+exports.crearDirectoriosIniciales = crearDirectoriosIniciales;
 function crearArchivos(_files) {
     var _a;
     try {

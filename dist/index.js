@@ -32,6 +32,7 @@ const file_1 = require("./Routers/file");
 const upload_1 = require("./Routers/upload");
 const horarios_1 = require("./Routers/horarios");
 const precios_1 = require("./Routers/precios");
+const Helpers_1 = require("./Helpers");
 dotenv_1.default.config();
 /*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
 const corsOptions = {
@@ -58,6 +59,7 @@ app.use('/horarios', cors(corsOptions),horarios_route)
 app.use('/precios', cors(corsOptions), precios_route)*/
 const app = (0, express_1.default)();
 const port = process.env.PORT;
+(0, Helpers_1.crearDirectoriosIniciales)();
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });

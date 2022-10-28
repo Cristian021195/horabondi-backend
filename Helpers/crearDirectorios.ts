@@ -7,9 +7,9 @@ import { pool } from "../config/db";
 import { OkPacket } from "mysql2";
 import { v4 as uuidv4 } from 'uuid';
 
-export function crearDirectorioData(src:string):boolean{
-    if(existsSync(src)){return true}else{
-        mkdir('./data', async(err)=>{
+export function crearDirectorioData():boolean{
+    if(existsSync(DIRECTORIES.DATA_DIR)){return true}else{
+        mkdir(DIRECTORIES.DATA_DIR, async(err)=>{
             if(!err){
                 await Promise.all(
                     DATA_DIRECTORIES_ARR.map(dirname => mkdirSync(dirname))
