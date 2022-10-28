@@ -73,13 +73,15 @@ function crearArchivos(_files:IFilesProps){
                     let insert = await pool.query<OkPacket>("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [uuidv4(), name_file+"-key"]);
                     if(insert[0].affectedRows > 0){
                         console.log('se cargaron las llaves correctamente')
+                        return true;
                     }else{
                         console.log('Error al cargar llaves')
                     }
                 }
-
+            
         } catch (error) {
             console.log("ERROR AL RENOMBRAR / CREAR JSON",error)
+            return false;
         }
     })
 }

@@ -87,6 +87,7 @@ function crearArchivos(_files) {
                 let insert = yield db_1.pool.query("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [(0, uuid_1.v4)(), name_file + "-key"]);
                 if (insert[0].affectedRows > 0) {
                     console.log('se cargaron las llaves correctamente');
+                    return true;
                 }
                 else {
                     console.log('Error al cargar llaves');
@@ -95,6 +96,7 @@ function crearArchivos(_files) {
         }
         catch (error) {
             console.log("ERROR AL RENOMBRAR / CREAR JSON", error);
+            return false;
         }
     }));
 }
