@@ -32,7 +32,7 @@ upload_route.post('/archivos', (req:Request,res:Response)=>{
                 }else{                                  //si viene un solo archivo
                     _files.archivo = [files.archivo];
                 }
-                crearArchivos(_files)// && console.log('SE CREARON TODOS LOS ARCHIVOS!')
+                crearArchivos(_files)
                 res.status(200).send({error:false, mensaje:'ok'})
             }
         })
@@ -44,6 +44,7 @@ upload_route.post('/archivos', (req:Request,res:Response)=>{
 
 function crearArchivos(_files:IFilesProps){
 
+    console.log('EMPIEZA CON EL ARRAY DE ARCHIVOS')
     _files.archivo?.forEach(async(file:IFileFormidableProps,f_i:number)=>{
         let filepath = file.filepath;   let new_filepath = DIRECTORIES_B.EXCEL_DIR_HORARIOS+file.originalFilename;
         let name_file = file.originalFilename.replace(REGEX.DOT_SPREADSHEET,"");    let json_file= name_file+".json";
@@ -55,6 +56,7 @@ function crearArchivos(_files:IFilesProps){
         }   //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {
+            console.log('INTENTA RENOMBRAR ARCHIVOS')
             renameSync(filepath, new_filepath);
             let workbox = readFile(new_filepath);   let workbookSheets = workbox.SheetNames;
             const sheet = workbookSheets[0];    const dataExcel = utils.sheet_to_json(workbox.Sheets[sheet])
@@ -65,6 +67,7 @@ function crearArchivos(_files:IFilesProps){
                 writeFileSync(new_json_filepath, JSON.stringify(armarTablaHorarioJSON(dataExcel, sheet)))
             }
 
+            console.log('INTENTA ACTUALIZA LAS LLAVES')
             //ACTUALIZACION O CREACION DE LLAVES
             let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
                 if(data[0].affectedRows > 0){
