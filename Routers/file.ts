@@ -52,12 +52,8 @@ file_route.post('/create', (req:Request,res:Response)=>{
 })
 
 file_route.post('/currents', (req:Request,res:Response)=>{
-    if(req.body?.create && req.body?.create === true){
-        res.send({
-            cwd: process.cwd(),
-            dirname: __dirname,
-        })
-    }else{
-        res.send({error:true, message:'bad'})
-    }
+    res.send({
+        cwd: process.cwd(),
+        dirname: __dirname,
+    })
 })
