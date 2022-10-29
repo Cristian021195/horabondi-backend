@@ -7,6 +7,8 @@ import { precios_route } from './Routers/precios';
 import cors from "cors";
 import { crearDirectorioData, initDirectories } from './Helpers';
 import { DIRECTORIES } from './Utils';
+import { pool } from './config/db';
+import { IUserListQuery } from './Interfaces';
 dotenv.config();
 
 /*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
@@ -52,6 +54,11 @@ app.use('/file', file_route)
 app.use('/upload', upload_route)
 app.use('/horarios',horarios_route)
 app.use('/precios', precios_route)
+
+app.get('/test-db', async (req: Request, res: Response) => {
+  let data = await pool.query<IUserListQuery[]>("SELECT * FROM usuarios;")
+  res.send({valor: data[0][0]})
+});
 
 
 app.listen(port, () => {

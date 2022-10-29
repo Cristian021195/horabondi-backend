@@ -18,8 +18,6 @@ const formidable_1 = require("formidable");
 const Utils_1 = require("../Utils");
 const xlsx_1 = require("xlsx");
 const fs_1 = require("fs");
-const uuid_1 = require("uuid");
-const db_1 = require("../config/db");
 const directories_1 = require("../Utils/directories");
 exports.upload_route = (0, express_1.Router)();
 exports.upload_route.post('/archivos', (req, res) => {
@@ -44,7 +42,7 @@ exports.upload_route.post('/archivos', (req, res) => {
                 else { //si viene un solo archivo
                     _files.archivo = [files.archivo];
                 }
-                crearArchivos(_files); // && console.log('SE CREARON TODOS LOS ARCHIVOS!')
+                crearArchivos(_files);
                 res.status(200).send({ error: false, mensaje: 'ok' });
             }
         });
@@ -55,6 +53,7 @@ exports.upload_route.post('/archivos', (req, res) => {
 });
 function crearArchivos(_files) {
     var _a;
+    console.log('EMPIEZA CON EL ARRAY DE ARCHIVOS');
     (_a = _files.archivo) === null || _a === void 0 ? void 0 : _a.forEach((file, f_i) => __awaiter(this, void 0, void 0, function* () {
         let filepath = file.filepath;
         let new_filepath = directories_1.DIRECTORIES_B.EXCEL_DIR_HORARIOS + file.originalFilename;
@@ -67,6 +66,7 @@ function crearArchivos(_files) {
         } //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {
+            console.log('INTENTA RENOMBRAR ARCHIVOS');
             (0, fs_1.renameSync)(filepath, new_filepath);
             let workbox = (0, xlsx_1.readFile)(new_filepath);
             let workbookSheets = workbox.SheetNames;
@@ -78,24 +78,23 @@ function crearArchivos(_files) {
             else {
                 (0, fs_1.writeFileSync)(new_json_filepath, JSON.stringify((0, Helpers_1.armarTablaHorarioJSON)(dataExcel, sheet)));
             }
+            console.log('INTENTA ACTUALIZA LAS LLAVES');
             //ACTUALIZACION O CREACION DE LLAVES
-            let data = yield db_1.pool.query("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [(0, uuid_1.v4)(), name_file + "-key"]);
-            if (data[0].affectedRows > 0) {
-                console.log('Se editaron las llaves correctamente');
-            }
-            else {
-                let insert = yield db_1.pool.query("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [(0, uuid_1.v4)(), name_file + "-key"]);
-                if (insert[0].affectedRows > 0) {
-                    console.log('se cargaron las llaves correctamente');
+            /*let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
+            if(data[0].affectedRows > 0){
+                console.log('Se editaron las llaves correctamente')
+            }else{
+                let insert = await pool.query<OkPacket>("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [uuidv4(), name_file+"-key"]);
+                if(insert[0].affectedRows > 0){
+                    console.log('se cargaron las llaves correctamente')
                     return true;
+                }else{
+                    console.log('Error al cargar llaves')
                 }
-                else {
-                    console.log('Error al cargar llaves');
-                }
-            }
+            }*/
         }
         catch (error) {
-            console.log("ERROR AL RENOMBRAR / CREAR JSON", error);
+            console.log("ERROR AL RENOMBRAR / CREAR JSON => ", error === null || error === void 0 ? void 0 : error.toString());
             return false;
         }
     }));
