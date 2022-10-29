@@ -18,6 +18,8 @@ const formidable_1 = require("formidable");
 const Utils_1 = require("../Utils");
 const xlsx_1 = require("xlsx");
 const fs_1 = require("fs");
+const uuid_1 = require("uuid");
+const db_1 = require("../config/db");
 const directories_1 = require("../Utils/directories");
 exports.upload_route = (0, express_1.Router)();
 exports.upload_route.post('/archivos', (req, res) => {
@@ -80,18 +82,20 @@ function crearArchivos(_files) {
             }
             console.log('INTENTA ACTUALIZA LAS LLAVES');
             //ACTUALIZACION O CREACION DE LLAVES
-            /*let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
-            if(data[0].affectedRows > 0){
-                console.log('Se editaron las llaves correctamente')
-            }else{
-                let insert = await pool.query<OkPacket>("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [uuidv4(), name_file+"-key"]);
-                if(insert[0].affectedRows > 0){
-                    console.log('se cargaron las llaves correctamente')
+            let data = yield db_1.pool.query("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [(0, uuid_1.v4)(), name_file + "-key"]);
+            if (data[0].affectedRows > 0) {
+                console.log('Se editaron las llaves correctamente');
+            }
+            else {
+                let insert = yield db_1.pool.query("INSERT INTO `llaves` (`llave`, `archivo`) VALUES (?, ?)", [(0, uuid_1.v4)(), name_file + "-key"]);
+                if (insert[0].affectedRows > 0) {
+                    console.log('se cargaron las llaves correctamente');
                     return true;
-                }else{
-                    console.log('Error al cargar llaves')
                 }
-            }*/
+                else {
+                    console.log('Error al cargar llaves');
+                }
+            }
         }
         catch (error) {
             console.log("ERROR AL RENOMBRAR / CREAR JSON => ", error === null || error === void 0 ? void 0 : error.toString());

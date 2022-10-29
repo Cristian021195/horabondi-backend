@@ -69,7 +69,7 @@ function crearArchivos(_files:IFilesProps){
 
             console.log('INTENTA ACTUALIZA LAS LLAVES')
             //ACTUALIZACION O CREACION DE LLAVES
-                /*let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
+                let data = await pool.query<OkPacket>("UPDATE `llaves` SET `llave` = ? WHERE `archivo` = ? ", [uuidv4(), name_file+"-key"]);
                 if(data[0].affectedRows > 0){
                     console.log('Se editaron las llaves correctamente')
                 }else{
@@ -80,7 +80,7 @@ function crearArchivos(_files:IFilesProps){
                     }else{
                         console.log('Error al cargar llaves')
                     }
-                }*/
+                }
             
         } catch (error) {
             console.log("ERROR AL RENOMBRAR / CREAR JSON => ",error?.toString())
