@@ -41,7 +41,7 @@ const port = process.env.PORT;
 initDirectories();
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+  res.send('Cmabio');
 });
 
 app.use(json())

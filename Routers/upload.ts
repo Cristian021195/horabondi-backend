@@ -13,12 +13,12 @@ import { OkPacket } from "mysql2";
 export const upload_route = Router();
 
 upload_route.post('/archivos', (req:Request,res:Response)=>{
-    console.log({
+    /*console.log({
         host:process.env.DB_PROD_HOST,
         user:process.env.DB_PROD_USERNAME,
         password:process.env.DB_PROD_PASSWORD,
         database:process.env.DB_PROD_DATABASE,
-    })
+    })*/
     const form:INewIncomingForm = new IncomingForm({ multiples: true });
     form.uploaddir = DIRECTORIES_B.EXCEL_DIR_HORARIOS;    form.uploadDir = DIRECTORIES_B.EXCEL_DIR_HORARIOS;
     form.maxFileSize = 5 * 1024 * 1024;                form.keepExtensions = true;
