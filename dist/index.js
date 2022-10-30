@@ -31,19 +31,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
+//import dotenv from 'dotenv';
+require('dotenv').config();
 const file_1 = require("./Routers/file");
 const upload_1 = require("./Routers/upload");
 const horarios_1 = require("./Routers/horarios");
 const precios_1 = require("./Routers/precios");
 const Helpers_1 = require("./Helpers");
 const db_1 = require("./config/db");
-dotenv_1.default.config();
+//dotenv.config();
 /*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
 const corsOptions = {
   origin: function (origin:any, callback:any) {

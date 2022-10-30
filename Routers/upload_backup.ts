@@ -4,7 +4,7 @@ import { armarTablaHorarioJSON, armarTablaPrecioJSON, crearDirectorioData } from
 //import { DATA_DIRECTORIES_B_ARR } from "../Utils";
 import {IncomingForm} from 'formidable'
 import { IFileFormidableProps, IFilesProps, INewIncomingForm } from "../Interfaces";
-import { DIRECTORIES_B, DIRECTORIES_C, DIRECTORIES, REGEX } from "../Utils";
+import { DIRECTORIES_B, REGEX } from "../Utils";
 import { readFile, utils } from "xlsx";
 import { renameSync, writeFileSync } from "fs";
 import { v4 as uuidv4 } from 'uuid';
@@ -13,34 +13,31 @@ import { OkPacket } from "mysql2";
 export const upload_route = Router();
 
 upload_route.post('/archivos', (req:Request,res:Response)=>{
-    console.log({
-        host:process.env.DB_PROD_HOST,
-        user:process.env.DB_PROD_USERNAME,
-        password:process.env.DB_PROD_PASSWORD,
-        database:process.env.DB_PROD_DATABASE,
-    })
-    const form:INewIncomingForm = new IncomingForm({ multiples: true });
-    form.uploaddir = DIRECTORIES_C.EXCEL_DIR_HORARIOS;    form.uploadDir = DIRECTORIES_C.EXCEL_DIR_HORARIOS;
-    form.maxFileSize = 5 * 1024 * 1024;                form.keepExtensions = true;
-    
-    form.parse(req, (err:Error, fields:any, files:any) => {
-        let _files: IFilesProps = {
-            archivo: null//nombre del key value en form-data postman
-        }
-        if(err){
-            res.status(500).send({mensaje: "error al parsear / subir / crear archivo", detail: {err}})
-        }else{
-            if(Array.isArray(files.archivo)){       //si vienen varios archivos
-                _files.archivo = files.archivo;
-            }else{                                  //si viene un solo archivo
-                _files.archivo = [files.archivo];
+    if(crearDirectorioData()){
+        const form:INewIncomingForm = new IncomingForm({ multiples: true });
+        form.uploaddir = DIRECTORIES_B.EXCEL_DIR_HORARIOS;    form.uploadDir = DIRECTORIES_B.EXCEL_DIR_HORARIOS;
+        form.maxFileSize = 30 * 1024 * 1024;                form.keepExtensions = true;
+        
+        form.parse(req, (err:Error, fields:any, files:any) => {
+            let _files: IFilesProps = {
+                archivo: null//nombre del key value en form-data postman
             }
-
-            //console.log(_files.archivo);
-            crearArchivos(_files);
-            res.status(200).send({error:false, mensaje:'ok'})
-        }
-    })
+            if(err){
+                console.log(err)
+                res.status(500).send({mensaje: "error al parsear / subir / crear archivo"})
+            }else{
+                if(Array.isArray(files.archivo)){       //si vienen varios archivos
+                    _files.archivo = files.archivo;
+                }else{                                  //si viene un solo archivo
+                    _files.archivo = [files.archivo];
+                }
+                crearArchivos(_files)
+                res.status(200).send({error:false, mensaje:'ok'})
+            }
+        })
+    }else{
+        res.send({error:false, message:'se crearon archivos por primera vez'})
+    }
 })
 
 
@@ -48,13 +45,13 @@ function crearArchivos(_files:IFilesProps){
 
     console.log('EMPIEZA CON EL ARRAY DE ARCHIVOS')
     _files.archivo?.forEach(async(file:IFileFormidableProps,f_i:number)=>{
-        let filepath = file.filepath;   let new_filepath = DIRECTORIES_C.EXCEL_DIR_HORARIOS+file.originalFilename;
+        let filepath = file.filepath;   let new_filepath = DIRECTORIES_B.EXCEL_DIR_HORARIOS+file.originalFilename;
         let name_file = file.originalFilename.replace(REGEX.DOT_SPREADSHEET,"");    let json_file= name_file+".json";
-        let new_json_filepath = DIRECTORIES_C.JSON_DIR_HORARIOS+json_file;
+        let new_json_filepath = DIRECTORIES_B.JSON_DIR_HORARIOS+json_file;
 
         if(REGEX.PRECIO.test(name_file)){
-            new_filepath = DIRECTORIES_C.EXCEL_DIR_PRECIOS+file.originalFilename;
-            new_json_filepath = DIRECTORIES_C.JSON_DIR_PRECIOS+json_file;
+            new_filepath = DIRECTORIES_B.EXCEL_DIR_PRECIOS+file.originalFilename;
+            new_json_filepath = DIRECTORIES_B.JSON_DIR_PRECIOS+json_file;
         }   //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {

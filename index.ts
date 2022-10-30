@@ -1,5 +1,6 @@
 import express, { Express, Request, Response, json } from 'express';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
+require('dotenv').config()
 import { file_route } from './Routers/file';
 import { upload_route } from './Routers/upload';
 import { horarios_route } from './Routers/horarios';
@@ -9,7 +10,7 @@ import { crearDirectorioData, initDirectories } from './Helpers';
 import { DIRECTORIES } from './Utils';
 import { pool } from './config/db';
 import { IUserListQuery } from './Interfaces';
-dotenv.config();
+//dotenv.config();
 
 /*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
 const corsOptions = {
