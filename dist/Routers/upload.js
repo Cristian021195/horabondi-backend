@@ -29,8 +29,8 @@ exports.upload_route.post('/archivos', (req, res) => {
         database: process.env.DB_PROD_DATABASE,
     });
     const form = new formidable_1.IncomingForm({ multiples: true });
-    form.uploaddir = Utils_1.DIRECTORIES_C.EXCEL_DIR_HORARIOS;
-    form.uploadDir = Utils_1.DIRECTORIES_C.EXCEL_DIR_HORARIOS;
+    form.uploaddir = Utils_1.DIRECTORIES_B.EXCEL_DIR_HORARIOS;
+    form.uploadDir = Utils_1.DIRECTORIES_B.EXCEL_DIR_HORARIOS;
     form.maxFileSize = 5 * 1024 * 1024;
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
@@ -58,13 +58,13 @@ function crearArchivos(_files) {
     console.log('EMPIEZA CON EL ARRAY DE ARCHIVOS');
     (_a = _files.archivo) === null || _a === void 0 ? void 0 : _a.forEach((file, f_i) => __awaiter(this, void 0, void 0, function* () {
         let filepath = file.filepath;
-        let new_filepath = Utils_1.DIRECTORIES_C.EXCEL_DIR_HORARIOS + file.originalFilename;
+        let new_filepath = Utils_1.DIRECTORIES_B.EXCEL_DIR_HORARIOS + file.originalFilename;
         let name_file = file.originalFilename.replace(Utils_1.REGEX.DOT_SPREADSHEET, "");
         let json_file = name_file + ".json";
-        let new_json_filepath = Utils_1.DIRECTORIES_C.JSON_DIR_HORARIOS + json_file;
+        let new_json_filepath = Utils_1.DIRECTORIES_B.JSON_DIR_HORARIOS + json_file;
         if (Utils_1.REGEX.PRECIO.test(name_file)) {
-            new_filepath = Utils_1.DIRECTORIES_C.EXCEL_DIR_PRECIOS + file.originalFilename;
-            new_json_filepath = Utils_1.DIRECTORIES_C.JSON_DIR_PRECIOS + json_file;
+            new_filepath = Utils_1.DIRECTORIES_B.EXCEL_DIR_PRECIOS + file.originalFilename;
+            new_json_filepath = Utils_1.DIRECTORIES_B.JSON_DIR_PRECIOS + json_file;
         } //console.log({original:file.originalFilename ,name_file,new_filepath, new_json_filepath});
         //console.log({filepath, new_filepath,na me_file, json_file, new_json_filepath})
         try {
