@@ -46,7 +46,7 @@ upload_route.post('/archivos', (req:Request,res:Response)=>{
 
 function crearArchivos(_files:IFilesProps){
 
-    console.log('EMPIEZA CON EL ARRAY DE ARCHIVOS')
+    console.log('EMPIEZA CON EL ARRAY DE ARCHIVOS');
     _files.archivo?.forEach(async(file:IFileFormidableProps,f_i:number)=>{
         let filepath = file.filepath;   let new_filepath = DIRECTORIES_B.EXCEL_DIR_HORARIOS+file.originalFilename;
         let name_file = file.originalFilename.replace(REGEX.DOT_SPREADSHEET,"");    let json_file= name_file+".json";
