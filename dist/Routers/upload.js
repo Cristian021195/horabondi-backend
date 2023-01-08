@@ -22,12 +22,12 @@ const uuid_1 = require("uuid");
 const db_1 = require("../config/db");
 exports.upload_route = (0, express_1.Router)();
 exports.upload_route.post('/archivos', (req, res) => {
-    console.log({
-        host: process.env.DB_PROD_HOST,
-        user: process.env.DB_PROD_USERNAME,
-        password: process.env.DB_PROD_PASSWORD,
-        database: process.env.DB_PROD_DATABASE,
-    });
+    /*console.log({
+        host:process.env.DB_PROD_HOST,
+        user:process.env.DB_PROD_USERNAME,
+        password:process.env.DB_PROD_PASSWORD,
+        database:process.env.DB_PROD_DATABASE,
+    })*/
     const form = new formidable_1.IncomingForm({ multiples: true });
     form.uploaddir = Utils_1.DIRECTORIES_B.EXCEL_DIR_HORARIOS;
     form.uploadDir = Utils_1.DIRECTORIES_B.EXCEL_DIR_HORARIOS;

@@ -17,7 +17,10 @@ exports.pool = (0, promise_1.createPool)({
     host: process.env.DB_PROD_HOST,
     user: process.env.DB_PROD_USERNAME,
     password: process.env.DB_PROD_PASSWORD,
-    database: process.env.DB_PROD_DATABASE
+    database: process.env.DB_PROD_DATABASE,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 /*
 

@@ -69,7 +69,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT;
 (0, Helpers_1.initDirectories)();
 app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server');
+    res.send('Cambio!!!');
 });
 app.use((0, express_1.json)());
 app.use(function (req, res, next) {
