@@ -1,5 +1,6 @@
 import express, { Express, Request, Response, json } from 'express';
 //import dotenv from 'dotenv';
+// more confing
 require('dotenv').config()
 import { file_route } from './Routers/file';
 import { upload_route } from './Routers/upload';
