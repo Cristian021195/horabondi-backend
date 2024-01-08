@@ -34,6 +34,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 //import dotenv from 'dotenv';
+// more confing
 require('dotenv').config();
 const file_1 = require("./Routers/file");
 const upload_1 = require("./Routers/upload");
@@ -41,7 +42,6 @@ const horarios_1 = require("./Routers/horarios");
 const precios_1 = require("./Routers/precios");
 const Helpers_1 = require("./Helpers");
 const db_1 = require("./config/db");
-const precio_1 = require("./Routers/precio");
 //dotenv.config();
 /*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
 const corsOptions = {
@@ -79,7 +79,6 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', '*');
     next();
 });
-app.use('/precio', precio_1.precio);
 app.use('/file', file_1.file_route);
 app.use('/upload', upload_1.upload_route);
 app.use('/horarios', horarios_1.horarios_route);
