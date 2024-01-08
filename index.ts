@@ -10,6 +10,7 @@ import { crearDirectorioData, initDirectories } from './Helpers';
 import { DIRECTORIES } from './Utils';
 import { pool } from './config/db';
 import { IUserListQuery } from './Interfaces';
+import { precio } from './Routers/precio';
 //dotenv.config();
 
 /*const whitelist = ['http://localhost:3000','http://localhost:3002', 'https://horabondi.vercel.app']
@@ -51,6 +52,7 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Methods', '*');
   next();
 });
+app.use('/precio', precio)
 app.use('/file', file_route)
 app.use('/upload', upload_route)
 app.use('/horarios',horarios_route)
